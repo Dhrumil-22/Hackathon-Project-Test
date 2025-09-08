@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { predictText, predictImage } from "../api";
+import { moderateText, moderateImage } from "../api";
 
 
 export default function UploadForm() {
@@ -9,7 +9,7 @@ export default function UploadForm() {
 
   const handleTextSubmit = async () => {
   try {
-    const res = await predictText(text);
+    const res = await moderateText(text);
     setResult(res);
   } catch (err) {
     console.error(err);
@@ -19,7 +19,7 @@ export default function UploadForm() {
 const handleImageSubmit = async () => {
   if (!file) return;
   try {
-    const res = await predictImage(file);
+    const res = await moderateImage(file);
     setResult(res);
   } catch (err) {
     console.error(err);
@@ -28,7 +28,7 @@ const handleImageSubmit = async () => {
 
   return (
     <div>
-      <h2>Text Prediction</h2>
+      <h2>Moderate Text </h2>
       <input
         type="text"
         value={text}
@@ -37,7 +37,7 @@ const handleImageSubmit = async () => {
       />
       <button onClick={handleTextSubmit}>Predict Text</button>
 
-      <h2>Image Prediction</h2>
+      <h2>Moderate Image</h2>
       <input type="file" onChange={(e) => setFile(e.target.files[0])} />
       <button onClick={handleImageSubmit}>Predict Image</button>
 
