@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, Form
 from transformers import pipeline
+from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 import torch
 import torchvision.transforms as transforms
@@ -7,6 +8,14 @@ import torchvision.models as models
 import io
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, use your frontend URL instead of "*"
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ✅ Text model (sentiment analysis)
 sentiment_model = pipeline("sentiment-analysis")
@@ -38,3 +47,7 @@ async def predict_image(file: UploadFile = File(...)):
         _, predicted = outputs.max(1)
         label = labels[predicted.item()]
     return {"label": label}
+
+
+
+
