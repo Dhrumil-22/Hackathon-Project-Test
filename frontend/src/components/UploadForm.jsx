@@ -8,15 +8,23 @@ export default function UploadForm() {
   const [result, setResult] = useState(null);
 
   const handleTextSubmit = async () => {
+  try {
     const res = await predictText(text);
     setResult(res);
-  };
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-  const handleImageSubmit = async () => {
-    if (!file) return;
+const handleImageSubmit = async () => {
+  if (!file) return;
+  try {
     const res = await predictImage(file);
     setResult(res);
-  };
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <div>

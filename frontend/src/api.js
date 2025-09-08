@@ -12,6 +12,10 @@ export const predictText = async (text) => {
 export const predictImage = async (file) => {
   const formData = new FormData();
   formData.append("file", file);
-  const response = await axios.post(`${BASE_URL}/predict-image`, formData);
+
+  const response = await axios.post(`${BASE_URL}/predict-image`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 };
+
